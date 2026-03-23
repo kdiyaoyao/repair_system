@@ -1,0 +1,70 @@
+<view class="page-container">
+  <view class="ocr-section" bindtap="chooseImageAndOCR">
+    <view class="camera-card" wx:if="{{tempImages.length === 0}}">
+      <view class="camera-icon-box">
+        <icon type="search" size="40" color="#2f54eb"></icon>
+      </view>
+      <text class="camera-tip">点这里拍照，系统自动帮你填单</text>
+      <text class="camera-sub-tip">支持识别：电灯、水管、电梯等设施</text>
+    </view>
+    
+    <view class="image-preview-box" wx:else>
+      <image src="{{tempImages[0]}}" mode="aspectFill" class="preview-img"></image>
+      <view class="re-take">点击重拍</view>
+      <view class="ocr-tag" wx:if="{{faultType}}">智能识别：{{faultType}}</view>
+    </view>
+  </view>
+
+  <view class="form-card">
+    <view class="section-title">
+      <view class="indicator"></view>
+      <text>报修详情信息</text>
+    </view>
+
+    <view class="input-group">
+      <text class="form-label">报修地址</text>
+      <input 
+        class="input-field disabled-input" 
+        value="{{houseNumber}}" 
+        disabled 
+        placeholder="登录后自动获取门牌号"
+      />
+    </view>
+
+    <view class="input-group">
+      <view class="label-row">
+        <text class="form-label">报修项目</text>
+        <text class="auto-fill-hint" wx:if="{{faultType}}">已根据照片自动填写</text>
+      </view>
+      <input 
+        class="input-field" 
+        placeholder="例如：电梯故障、路灯不亮" 
+        placeholder-class="placeholder-style"
+        bindinput="inputTitle" 
+        value="{{title}}" 
+      />
+    </view>
+
+    <view class="input-group">
+      <text class="form-label">问题描述</text>
+      <textarea 
+        class="textarea-field" 
+        placeholder="请简单描述损坏情况，或者对着损坏处再拍一张照片..." 
+        placeholder-class="placeholder-style"
+        bindinput="inputContent" 
+        value="{{content}}"
+        maxlength="200"
+      ></textarea>
+      <view class="word-count">{{content.length}}/200</view>
+    </view>
+  </view>
+
+  <view class="tip-box">
+    <icon type="info" size="14" color="#99a2aa" />
+    <text class="tip-text">提交后物业将在 24 小时内受理。</text>
+  </view>
+
+  <button class="main-submit-btn" hover-class="btn-hover-effect" bindtap="submitForm">
+    提交报修申请
+  </button>
+</view>

@@ -1,0 +1,120 @@
+<view class="detail-container">
+  <view class="status-header bg-{{order.status}}">
+    <view class="status-main">
+      <icon type="{{order.status >= 3 ? 'success' : 'waiting'}}" color="#fff" size="28"></icon>
+      <text class="status-text">
+        {{order.status == 0 ? '已提交，待受理' : 
+         (order.status == 1 ? '物业已派工' : 
+         (order.status == 2 ? '师傅维修中' : 
+         (order.status == 3 ? '维修已完成' : '评价已完成')))}}
+      </text>
+    </view>
+    <view class="status-desc">报修单号：#{{order.id}}</view>
+  </view>
+
+  <view class="info-card">
+    <view class="card-title">报修详情</view>
+    <view class="info-item">
+      <text class="label">项目标题</text>
+      <text class="value">{{order.title}}</text>
+    </view>
+    <view class="info-item" wx:if="{{order.faultType}}">
+      <text class="label">设施分类</text>
+      <text class="value" style="color: #2f54eb;">{{order.faultType}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">详细内容</text>
+      <text class="value">{{order.content}}</text>
+    </view>
+    <view class="info-item" wx:if="{{order.address}}">
+      <text class="label">报修地址</text>
+      <text class="value">{{order.address}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">提交时间</text>
+      <text class="value">{{order.createTime}}</text>
+    </view>
+  </view>
+
+  <view class="info-card">
+    <view class="card-title">服务进度</view>
+    <view class="timeline">
+      <view class="time-node active">
+        <view class="node-dot"></view>
+        <view class="node-content">
+          <view class="node-title">工单已提交</view>
+          <view class="node-time">{{order.createTime}}</view>
+        </view>
+      </view>
+
+      <view class="time-node {{order.status >= 1 ? 'active' : ''}}">
+        <view class="node-dot"></view>
+        <view class="node-content">
+          <view class="node-title">物业已受理</view>
+          <view class="node-desc" wx:if="{{order.workerName}}">已指派维修员：{{order.workerName}}</view>
+          <view class="node-desc" wx:else>等待管理人员指派师傅</view>
+        </view>
+      </view>
+
+      <view class="time-node {{order.status >= 2 ? 'active' : ''}}">
+        <view class="node-dot"></view>
+        <view class="node-content">
+          <view class="node-title">师傅维修中</view>
+          <view class="node-desc" wx:if="{{order.status >= 2}}">维修员正在努力修复中，请稍候</view>
+        </view>
+      </view>
+
+      <view class="time-node {{order.status >= 3 ? 'active' : ''}}">
+        <view class="node-dot"></view>
+        <view class="node-content">
+          <view class="node-title">维修已结案</view>
+          <view class="node-desc" wx:if="{{order.status >= 3}}">故障已解决，感谢您的反馈</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="contact-btn" open-type="contact">联系客服</button>
+    <button wx:if="{{order.status == 3}}" class="eval-btn" bindtap="goToRate" style="background: #52c41a; color: #fff;">去评价</button>
+    <button wx:else class="back-btn" bindtap="goBack">返回列表</button>
+  </view>
+</view>
+<view class="cu-modal {{showRateModal ? 'show' : ''}}" wx:if="{{showRateModal}}">
+  <view class="cu-dialog">
+    <view class="modal-header">
+      <text class="modal-title">服务评价</text>
+      <text class="close-btn" bindtap="closeRateModal">×</text>
+    </view>
+    
+    <view class="modal-body">
+      <view class="worker-brief" wx:if="{{order.workerName}}">
+        <image src="/assets/avatar-worker.png" class="mini-avatar"></image>
+        <text>为您服务的师傅：{{order.workerName}}</text>
+      </view>
+
+      <view class="star-group">
+        <block wx:for="{{5}}" wx:key="index">
+          <text 
+            class="star-icon {{index < rateScore ? 'active' : ''}}" 
+            bindtap="selectScore" 
+            data-score="{{index + 1}}"
+          >★</text>
+        </block>
+        <view class="score-text">{{scoreTexts[rateScore-1] || '请打分'}}</view>
+      </view>
+
+      <textarea 
+        class="rate-content" 
+        placeholder="师傅修得好吗？环境清理了吗？（选填）" 
+        bindinput="inputRateContent"
+        value="{{rateContent}}"
+      ></textarea>
+    </view>
+
+    <view class="modal-footer">
+      <button class="submit-rate-btn" bindtap="submitRating">提交评价</button>
+    </view>
+  </view>
+  <view class="modal-mask" bindtap="closeRateModal"></view>
+</view>

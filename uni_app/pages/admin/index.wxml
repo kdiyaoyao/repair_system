@@ -1,0 +1,90 @@
+<view class="admin-container">
+  <view class="admin-header">
+    <text class="admin-title">物业管理工作台</text>
+    <view class="stats-box">
+      <view class="stat-item">
+        <text class="num">{{stats.pending || 0}}</text>
+        <text class="lab">待受理单</text>
+      </view>
+      <view class="stat-item">
+        <text class="num">{{stats.todayNew || 0}}</text>
+        <text class="lab">今日新增</text>
+      </view>
+      <view class="stat-item">
+        <text class="num">{{stats.processing || 0}}</text>
+        <text class="lab">正在维修</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="tab-box">
+    <view class="tab-item {{currentTab == 0 ? 'active' : ''}}" bindtap="switchTab" data-status="0">
+      待受理
+    </view>
+    <view class="tab-item {{currentTab == 1 ? 'active' : ''}}" bindtap="switchTab" data-status="1">
+      工单流水
+    </view>
+  </view>
+
+  <view class="list-section">
+    <view class="section-title">
+      {{currentTab == 0 ? '待处理工单' : '全量工单记录'}}
+    </view>
+    
+    <view wx:if="{{orders.length === 0}}" class="empty-holder">
+      <icon type="info" size="40" color="#ccc"></icon>
+      <text>暂无相关报修记录</text>
+    </view>
+
+    <view wx:for="{{orders}}" wx:key="id" class="admin-card {{item.status >= 3 ? 'card-done' : ''}}">
+      <view class="admin-card-body">
+        <view class="card-header-row">
+          <text class="order-id">#{{item.id}}</text>
+          <text class="status-tag tag-{{item.status}}">
+            {{item.status == 0 ? '待受理' : (item.status == 1 ? '已派工' : (item.status == 2 ? '维修中' : (item.status == 3 ? '已完成' : '已评价')))}}
+          </text>
+        </view>
+
+        <view class="info-group">
+          <text class="t">报修内容：</text>
+          <text class="v">{{item.title}}</text>
+        </view>
+
+        <view class="info-group" wx:if="{{item.faultType}}">
+          <text class="t">设施分类：</text>
+          <text class="v">{{item.faultType}}</text>
+        </view>
+
+        <view class="info-group">
+          <text class="t">报修地址：</text>
+          <text class="v">{{item.address || '未填写'}}</text>
+        </view>
+
+        <view class="info-group">
+          <text class="t">报修时间：</text>
+          <text class="v">{{item.createTime}}</text>
+        </view>
+
+        <view class="info-group" wx:if="{{item.workerName}}">
+          <text class="t">维修师傅：</text>
+          <text class="v">{{item.workerName}}</text>
+        </view>
+      </view>
+      
+      <view class="admin-footer" wx:if="{{item.status == 0}}">
+        <button class="handle-btn" bindtap="updateStatus" data-id="{{item.id}}">立即指派师傅</button>
+      </view>
+
+      <view class="admin-footer done-style" wx:elif="{{item.status >= 3}}">
+        <icon type="success_no_circle" size="14" color="#52c41a"></icon>
+        <text>维修已结案</text>
+        <text wx:if="{{item.rating}}" class="rating-text">（评分: {{item.rating}}星）</text>
+      </view>
+
+      <view class="admin-footer processing-style" wx:else>
+        <icon type="waiting" size="14" color="#1890ff"></icon>
+        <text>师傅维修中...</text>
+      </view>
+    </view>
+  </view>
+</view>

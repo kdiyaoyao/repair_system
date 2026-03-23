@@ -1,0 +1,92 @@
+/* 全局背景色 */
+page {
+  background-color: #f5f7fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.container {
+  padding: 30rpx;
+}
+
+/* 顶部标题栏 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.fab-btn {
+  position: fixed;
+  bottom: 60rpx;
+  right: 40rpx;
+  width: 220rpx;
+  height: 90rpx;
+  background-color: #07c160;
+  border-radius: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  box-shadow: 0 8rpx 20rpx rgba(7, 193, 96, 0.3);
+  font-size: 28rpx;
+  z-index: 99;
+}
+.fab-icon {
+  font-size: 40rpx;
+  margin-right: 8rpx;
+  margin-top: -4rpx;
+}
+
+/* 报修卡片 */
+.card {
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+  padding-bottom: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.order-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* 状态标签样式 */
+.status-tag {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  background: #e1f5fe;
+  color: #03a9f4;
+}
+
+.content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  display: block;
+}
+
+.time {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #999;
+}

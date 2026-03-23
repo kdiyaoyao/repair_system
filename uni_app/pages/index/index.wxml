@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="header">
+    <text class="title">报修中心</text>
+  </view>
+  <view class="fab-btn" bindtap="goToApply" wx:if="{{role === 'OWNER'}}">
+  <text class="fab-icon">+</text>
+  <text>发起报修</text>
+</view>
+
+<view wx:for="{{orders}}" wx:key="id" class="card">
+  <view class="card-header">
+    <text class="order-title">{{item.title}}</text>
+    <text class="status-tag">{{item.status == 0 ? '待处理' : '已完成'}}</text>
+  </view>
+  <text class="content">{{item.content}}</text>
+  
+  <view class="admin-actions" wx:if="{{role === 'ADMIN' && item.status == 0}}">
+    <button size="mini" type="warn" bindtap="handleRepair" data-id="{{item.id}}">点击处理</button>
+  </view>
+</view>
+  <scroll-view scroll-y class="list-wrapper">
+    <view wx:for="{{orders}}" wx:key="id" class="card">
+      <view class="card-header">
+        <text class="order-title">{{item.title}}</text>
+        <view class="status-tag">{{item.status == 0 ? '待处理' : (item.status == 1 ? '维修中' : '已完成')}}</view>
+      </view>
+      <view class="card-body">
+        <text class="content">{{item.content}}</text>
+        <text class="time">报修时间：{{item.createTime}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

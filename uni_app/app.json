@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/owner/index",
+    "pages/admin/index",
+    "pages/repair/apply",
+    "pages/notice/notice",
+    "pages/me/me",
+    "pages/repair/detail/detail",
+    "pages/me/password"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#007aff",
+    "navigationBarTitleText": "报修系统",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#8a8a8e",
+    "selectedColor": "#1c1c1e",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/owner/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

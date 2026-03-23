@@ -1,0 +1,71 @@
+<view class="me-container">
+  <view class="user-card">
+    <view class="card-glass-bg"></view> <view class="user-content">
+      <view class="avatar-box">
+        <open-data type="userAvatarUrl" class="avatar"></open-data>
+      </view>
+      <view class="info-box">
+        <text class="nickname">{{userInfo.username || '幸福住户'}}</text>
+        <view class="role-tag">
+          <icon type="success_no_circle" size="10" color="#fff"></icon>
+          <text class="tag-text">{{userInfo.role == 'admin' ? '物业管理员' : '已认证业主'}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="card-deco">Community Service</view> </view>
+
+  <view class="stats-board-wrapper" wx:if="{{userInfo.role != 'admin'}}">
+    <view class="stats-board">
+      <view class="stats-item pending">
+        <view class="stats-icon-bg"><icon type="waiting" size="22" color="#ff9c6e"></icon></view>
+        <text class="stats-num">{{orderStats.pending || 0}}</text>
+        <text class="stats-label">待处理单</text>
+      </view>
+      <view class="stats-item processing">
+        <view class="stats-icon-bg"><icon type="repair" size="22" color="#1890ff"></icon></view>
+        <text class="stats-num">{{orderStats.processing || 0}}</text>
+        <text class="stats-label">维修中</text>
+      </view>
+      <view class="stats-item completed">
+        <view class="stats-icon-bg"><icon type="success" size="22" color="#52c41a"></icon></view>
+        <text class="stats-num">{{orderStats.completed || 0}}</text>
+        <text class="stats-label">已结案</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="function-grid">
+    <view class="grid-item" bindtap="navToPassword">
+      <view class="grid-icon-box bg-light-blue">
+        <icon type="safe_success" size="28" color="#1890ff"></icon>
+      </view>
+      <view class="grid-text-box">
+        <text class="grid-title">安全中心</text>
+        <text class="grid-desc">修改登录密码</text>
+      </view>
+      <icon type="arrow_right" size="12" color="#bfbfbf" class="grid-arrow"></icon>
+    </view>
+    
+    <view class="grid-item" bindtap="contactSupport">
+      <view class="grid-icon-box bg-light-green">
+        <icon type="info" size="28" color="#52c41a"></icon>
+      </view>
+      <view class="grid-text-box">
+        <text class="grid-title">联系物业</text>
+        <text class="grid-desc">24小时服务热线</text>
+      </view>
+      <icon type="arrow_right" size="12" color="#bfbfbf" class="grid-arrow"></icon>
+    </view>
+  </view>
+
+  <view class="footer-section">
+    <button class="logout-btn-plain" bindtap="handleLogout">
+      <icon type="cancel" size="16" color="#ff4d4f"></icon>
+      <text class="logout-text">退出当前账号</text>
+    </button>
+    <view class="version-info">
+      <text>社区智慧报修平台</text>
+      <text class="version-num">v1.1.2</text>
+    </view>
+  </view>
+</view>

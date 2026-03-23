@@ -1,0 +1,268 @@
+/* 1. 基础容器 */
+.detail-container {
+  min-height: 100vh;
+  background-color: #f7f8fa;
+  padding-bottom: 140rpx; /* 为底部固定栏留位 */
+}
+
+/* 2. 顶部状态看板 - 动态颜色 */
+.status-header {
+  padding: 60rpx 40rpx;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+/* 状态背景色映射 */
+.bg-0 { background: linear-gradient(135deg, #ff7875, #ff4d4f); } /* 待受理-红 */
+.bg-1, .bg-2 { background: linear-gradient(135deg, #69c0ff, #1890ff); } /* 处理中-蓝 */
+.bg-3, .bg-4 { background: linear-gradient(135deg, #95de64, #52c41a); } /* 已完成-绿 */
+
+.status-main {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.status-text {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-left: 20rpx;
+}
+
+.status-desc {
+  font-size: 26rpx;
+  opacity: 0.85;
+  margin-left: 68rpx;
+}
+
+/* 3. 信息卡片通用样式 */
+.info-card {
+  background: #ffffff;
+  margin: 24rpx;
+  padding: 32rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.03);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #262626;
+  margin-bottom: 28rpx;
+  padding-left: 16rpx;
+  border-left: 8rpx solid #1890ff;
+}
+
+.info-item {
+  display: flex;
+  padding: 16rpx 0;
+  font-size: 28rpx;
+}
+
+.label {
+  color: #8c8c8c;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.value {
+  color: #262626;
+  flex: 1;
+  word-break: break-all;
+}
+
+/* 4. 时间轴逻辑 */
+.timeline {
+  padding: 10rpx 0;
+}
+
+.time-node {
+  display: flex;
+  position: relative;
+  padding-bottom: 50rpx;
+}
+
+/* 线条绘制 */
+.time-node::after {
+  content: "";
+  position: absolute;
+  left: 11rpx;
+  top: 36rpx;
+  bottom: 0;
+  width: 2rpx;
+  background: #f0f0f0;
+}
+
+.time-node:last-child::after {
+  display: none;
+}
+
+.node-dot {
+  width: 24rpx;
+  height: 24rpx;
+  background: #e8e8e8;
+  border-radius: 50%;
+  margin-top: 12rpx;
+  z-index: 2;
+}
+
+.time-node.active .node-dot {
+  background: #1890ff;
+  box-shadow: 0 0 0 6rpx rgba(24, 144, 255, 0.2);
+}
+
+.time-node.active::after {
+  background: #1890ff;
+}
+
+.node-content {
+  margin-left: 32rpx;
+  flex: 1;
+}
+
+.node-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #bfbfbf;
+}
+
+.time-node.active .node-title {
+  color: #262626;
+}
+
+.node-desc {
+  font-size: 24rpx;
+  color: #8c8c8c;
+  margin-top: 6rpx;
+}
+
+.node-time {
+  font-size: 22rpx;
+  color: #bfbfbf;
+  margin-top: 4rpx;
+}
+
+/* 5. 评价弹窗 (Modal) */
+.cu-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-mask {
+  position: absolute;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px); /* 毛玻璃效果 */
+}
+
+.cu-dialog {
+  position: relative;
+  width: 620rpx;
+  background: #ffffff;
+  border-radius: 32rpx;
+  z-index: 2001;
+  overflow: hidden;
+  animation: modalIn 0.3s ease-out;
+}
+
+@keyframes modalIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  padding: 40rpx 32rpx 20rpx;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #262626;
+}
+
+.star-group {
+  padding: 40rpx 0;
+  text-align: center;
+}
+
+.star-icon {
+  font-size: 80rpx;
+  color: #f0f0f0;
+  margin: 0 10rpx;
+  transition: color 0.2s;
+}
+
+.star-icon.active {
+  color: #ffc107;
+}
+
+.score-text {
+  font-size: 30rpx;
+  color: #ffc107;
+  font-weight: bold;
+  margin-top: 20rpx;
+}
+
+.rate-content {
+  width: 90%;
+  height: 180rpx;
+  background: #f9f9f9;
+  margin: 0 auto 40rpx;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+.submit-rate-btn {
+  width: 100% !important;
+  height: 110rpx;
+  line-height: 110rpx;
+  background: #2f54eb;
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 0;
+}
+
+/* 6. 底部固定工具栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 120rpx;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0 32rpx 20rpx; /* 适配全面屏底部 */
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.bottom-bar button {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  margin: 0 12rpx;
+}
+
+.contact-btn {
+  background: #f5f5f5;
+  color: #595959;
+}
+
+.back-btn {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.eval-btn {
+  background: #52c41a;
+  color: #ffffff;
+  font-weight: bold;
+}

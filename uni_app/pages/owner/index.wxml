@@ -1,0 +1,93 @@
+<view class="page-container">
+  <view class="top-cover"></view>
+
+  <view class="main-content">
+    <view class="header">
+      <view class="user-info">
+        <text class="welcome">你好，小区邻居</text>
+        <text class="title">报修进度查询</text>
+      </view>
+      <view class="header-icon" bindtap="goToNoticeCenter">
+        <view class="notice-badge" wx:if="{{unreadNoticeCount > 0}}">{{unreadNoticeCount}}</view>
+        <icon type="info" size="22" color="rgba(255,255,255,0.9)"></icon>
+      </view>
+    </view>
+
+    <view class="notice-bar" wx:if="{{notices.length > 0}}" bindtap="goToNoticeCenter">
+      <view class="notice-l">
+        <view class="notice-tag">动态</view>
+      </view>
+      <swiper class="notice-swiper" vertical autoplay circular interval="3500">
+        <swiper-item wx:for="{{notices}}" wx:key="id">
+          <text class="notice-item">{{item.title}}: {{item.content}}</text>
+        </swiper-item>
+      </swiper>
+      <view class="notice-arrow">
+        <view class="arrow-icon"></view>
+      </view>
+    </view>
+
+    <view class="tab-nav">
+      <view class="tab-item {{currentType == 'all' ? 'active' : ''}}" bindtap="switchTab" data-type="all">全部</view>
+      <view class="tab-item {{currentType == 'doing' ? 'active' : ''}}" bindtap="switchTab" data-type="doing">进行中</view>
+      <view class="tab-item {{currentType == 'done' ? 'active' : ''}}" bindtap="switchTab" data-type="done">已办结</view>
+      <view class="tab-line" style="left: {{tabLineLeft}}%">
+        <view class="tab-line-inner"></view>
+      </view>
+    </view>
+
+    <scroll-view scroll-y class="list-wrapper" enable-passive>
+      <view class="empty-tip" wx:if="{{displayOrders.length === 0}}">
+        <image src="https://img01.yzcdn.cn/vant/empty-image-default.png" mode="aspectFit" class="empty-img" />
+        <text>目前还没有报修记录哦</text>
+        <button class="empty-btn" bindtap="navToApply">去报修一个</button>
+      </view>
+      
+      <view wx:for="{{displayOrders}}" wx:key="id" 
+            class="card {{item.status >= 3 ? 'card-done' : ''}}" 
+            hover-class="card-hover" hover-stay-time="100"
+            bindtap="goToDetail" data-id="{{item.id}}">
+        
+        <view class="card-header">
+          <view class="title-group">
+            <view class="order-id">#{{item.id}}</view>
+            <text class="order-title">{{item.faultType || item.title}}</text>
+          </view>
+          
+          <view class="status-tag status-{{item.status}}">
+            <view class="status-dot"></view>
+            <text>{{item.status == 0 ? '待受理' : (item.status == 1 ? '已派工' : (item.status == 2 ? '维修中' : (item.status == 3 ? '已完成' : '已评价')))}}</text>
+          </view>
+        </view>
+        
+        <view class="card-body">
+          <text class="content">{{item.content}}</text>
+          <view class="worker-info" wx:if="{{item.workerName}}">
+            <text class="worker-label">负责师傅：</text>
+            <text class="worker-name">{{item.workerName}}</text>
+          </view>
+        </view>
+
+        <view class="card-footer">
+          <view class="time-box">
+            <icon type="waiting" size="12" color="#ccc"></icon>
+            <text class="time">{{item.createTime}}</text>
+          </view>
+          <view class="detail-link">
+            <text>{{item.status == 3 ? '去评价' : '查看进度'}}</text>
+            <view class="link-arrow"></view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="fab-btn" bindtap="navToApply" hover-class="fab-hover">
+    <view class="fab-inner">
+      <view class="fab-plus-box">
+        <text class="fab-plus">+</text>
+      </view>
+      <text class="fab-text">我要报修</text>
+    </view>
+  </view>
+</view>
